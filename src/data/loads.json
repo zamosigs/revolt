@@ -1,0 +1,46 @@
+[
+  {
+    "id": "load_1001",
+    "clientId": "cli_1",
+    "dispatcherId": "emp_3",
+    "pickup": {
+      "city": "Chicago",
+      "state": "IL",
+      "address": "123 Industrial Way"
+    },
+    "dropoff": {
+      "city": "Dallas",
+      "state": "TX",
+      "address": "456 Logistics Blvd"
+    },
+    "pickupDate": "2024-05-10",
+    "dropoffDate": "2024-05-12",
+    "grossAmount": 4500,
+    "clientPercentage": 12,
+    "companyRevenue": 540,
+    "status": "In Transit",
+    "notes": "Fragile items. Handle with care."
+  },
+  {
+    "id": "load_1002",
+    "clientId": "cli_2",
+    "dispatcherId": "emp_3",
+    "pickup": {
+      "city": "Atlanta",
+      "state": "GA",
+      "address": "789 Freight Rd"
+    },
+    "dropoff": {
+      "city": "Miami",
+      "state": "FL",
+      "address": "101 Port Ave"
+    },
+    "pickupDate": "2024-05-08",
+    "dropoffDate": "2024-05-09",
+    "grossAmount": 3200,
+    "clientPercentage": 10,
+    "companyRevenue": 320,
+    "status": "Delivered",
+    "notes": "On-time delivery requested."
+  }
+]

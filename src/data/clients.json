@@ -1,0 +1,38 @@
+[
+  {
+    "id": "cli_1",
+    "name": "John Logics",
+    "companyName": "Blue Sky Trucking",
+    "contactPerson": "John Smith",
+    "email": "john@bluesky.com",
+    "phone": "555-0123",
+    "contractPercentage": 12,
+    "contractType": "Standard",
+    "status": "Active",
+    "assignedDispatcher": "emp_3"
+  },
+  {
+    "id": "cli_2",
+    "name": "Sarah Trans",
+    "companyName": "Swift Haulage",
+    "contactPerson": "Sarah Connor",
+    "email": "sarah@swifthaul.com",
+    "phone": "555-0124",
+    "contractPercentage": 10,
+    "contractType": "Premium",
+    "status": "Active",
+    "assignedDispatcher": "emp_3"
+  },
+  {
+    "id": "cli_3",
+    "name": "Global Logistics",
+    "companyName": "Evergreen Express",
+    "contactPerson": "Robert Paulson",
+    "email": "robert@evergreen.com",
+    "phone": "555-0125",
+    "contractPercentage": 15,
+    "contractType": "Standard",
+    "status": "Inactive",
+    "assignedDispatcher": "emp_1"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "rep_1",
+    "employeeId": "emp_3",
+    "date": "2024-05-08",
+    "loadsHandled": 8,
+    "revenueGenerated": 12500,
+    "problemsFaced": "Traffic delays in the Chicago area.",
+    "pendingTasks": "Contact 2 shippers for tomorrow's loads.",
+    "tomorrowPriorities": "Ensure morning loads are picked up on time."
+  },
+  {
+    "id": "rep_2",
+    "employeeId": "emp_3",
+    "date": "2024-05-07",
+    "loadsHandled": 10,
+    "revenueGenerated": 15000,
+    "problemsFaced": "None.",
+    "pendingTasks": "Completed all tasks.",
+    "tomorrowPriorities": "Focus on high-value loads."
+  }
+]

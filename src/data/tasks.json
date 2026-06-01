@@ -1,0 +1,42 @@
+[
+  {
+    "id": "task_1",
+    "title": "Quarterly Performance Review",
+    "assignee": "emp_2",
+    "status": "In Progress",
+    "priority": "High",
+    "deadline": "2024-05-15",
+    "progress": 65,
+    "description": "Conduct performance reviews for all dispatchers."
+  },
+  {
+    "id": "task_2",
+    "title": "Update Payroll Sheet",
+    "assignee": "emp_4",
+    "status": "Pending",
+    "priority": "Medium",
+    "deadline": "2024-05-10",
+    "progress": 0,
+    "description": "Include bonuses for the last month."
+  },
+  {
+    "id": "task_3",
+    "title": "New Carrier Onboarding",
+    "assignee": "emp_3",
+    "status": "Completed",
+    "priority": "Low",
+    "deadline": "2024-05-01",
+    "progress": 100,
+    "description": "Onboard 5 new carriers for the Northeast region."
+  },
+  {
+    "id": "task_4",
+    "title": "Monthly Revenue Report",
+    "assignee": "emp_1",
+    "status": "Overdue",
+    "priority": "High",
+    "deadline": "2024-05-05",
+    "progress": 20,
+    "description": "Prepare final revenue figures for April."
+  }
+]

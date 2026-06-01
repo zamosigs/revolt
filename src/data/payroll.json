@@ -1,0 +1,42 @@
+[
+  {
+    "id": "pay_1",
+    "employeeId": "emp_1",
+    "baseSalary": 8500,
+    "commission": 1500,
+    "bonus": 1000,
+    "deduction": 200,
+    "status": "Paid",
+    "period": "April 2024"
+  },
+  {
+    "id": "pay_2",
+    "employeeId": "emp_2",
+    "baseSalary": 7000,
+    "commission": 1200,
+    "bonus": 500,
+    "deduction": 150,
+    "status": "Pending",
+    "period": "April 2024"
+  },
+  {
+    "id": "pay_3",
+    "employeeId": "emp_3",
+    "baseSalary": 5500,
+    "commission": 3000,
+    "bonus": 200,
+    "deduction": 100,
+    "status": "Processing",
+    "period": "April 2024"
+  },
+  {
+    "id": "pay_4",
+    "employeeId": "emp_4",
+    "baseSalary": 6000,
+    "commission": 0,
+    "bonus": 300,
+    "deduction": 100,
+    "status": "Paid",
+    "period": "April 2024"
+  }
+]
