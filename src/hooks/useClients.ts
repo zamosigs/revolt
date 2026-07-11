@@ -42,53 +42,31 @@ export function useClients() {
   });
 }
 
+import { createClientAction } from '@/app/actions/clients';
+
 export function useCreateClient() {
   const queryClient = useQueryClient();
-  const supabase = createClient();
-  const { user } = useAuthStore();
 
   return useMutation({
     mutationFn: async (newClient: any) => {
       console.log('--- Client Creation Debug ---');
       console.log('Payload:', newClient);
 
-      const { data, error } = await supabase
-        .from('clients')
-        .insert([{
-          company_name: newClient.companyName,
-          contact_person: newClient.contactName,
-          email: newClient.email,
-          phone: newClient.phone,
-          contract_percentage: parseFloat(newClient.contractPercentage),
-          status: 'ACTIVE'
-        }])
-        .select()
-        .single();
+      const result = await createClientAction({
+        companyName: newClient.companyName,
+        contactName: newClient.contactName,
+        email: newClient.email,
+        phone: newClient.phone,
+        contractPercentage: newClient.contractPercentage,
+        assignedDispatcher: newClient.assignedDispatcher
+      });
 
-      if (error) {
-        console.error('Supabase Client Creation Error:', error);
-        throw error;
+      if (!result.success) {
+        console.error('Action Creation Error:', result.error);
+        throw new Error(result.error);
       }
 
-      // If a dispatcher was assigned, we also need to create the assignment record
-      if (newClient.assignedDispatcher && data && user) {
-        const { error: assignError } = await supabase
-          .from('dispatcher_clients')
-          .insert([{
-            dispatcher_id: newClient.assignedDispatcher,
-            client_id: data.id,
-            assigned_by: user.id,
-            status: 'ACTIVE'
-          }]);
-        
-        if (assignError) {
-          console.error('Dispatcher Assignment Error:', assignError);
-          // We don't throw here to avoid failing the whole creation if just assignment fails, 
-          // but in production we might want more robust atomicity via RPC.
-        }
-      }
-
-      return data;
+      return result.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
