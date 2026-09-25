@@ -1,25 +1,68 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { updateSession } from '@/lib/supabase/middleware';
 import { canAccessPath } from '@/lib/auth/permissions';
+import { updateLedgerSession } from '@/features/ledger/lib/supabase/middleware';
 
-const PUBLIC_ROUTES = ['/login', '/set-password', '/forgot-password', '/unauthorized', '/api/auth/callback'];
+const ERP_PUBLIC_ROUTES = ['/login', '/set-password', '/forgot-password', '/unauthorized', '/api/auth/callback'];
+const LEDGER_PUBLIC_ROUTES = ['/ledger/login'];
 
 export async function middleware(request: NextRequest) {
-  const { response, user, supabase } = await updateSession(request);
-
   const currentPath = request.nextUrl.pathname;
 
-  // Allow public routes
-  if (PUBLIC_ROUTES.includes(currentPath)) {
+  // ──────────────────────────────────────────────
+  // LEDGER MODULE: Separate authentication & authorization boundary
+  // ──────────────────────────────────────────────
+  if (currentPath.startsWith('/ledger')) {
+    const { response, user, supabase } = await updateLedgerSession(request);
+
+    // Allow public ledger routes
+    if (LEDGER_PUBLIC_ROUTES.includes(currentPath)) {
+      return response;
+    }
+
+    // Redirect to ledger login if not authenticated
+    if (!user) {
+      return NextResponse.redirect(new URL('/ledger/login', request.url));
+    }
+
+    // Check ledger_users table in Ledger Supabase DB
+    const { data: ledgerUser } = await supabase
+      .from('ledger_users')
+      .select('role, is_active')
+      .eq('user_id', user.id)
+      .single();
+
+    if (!ledgerUser || !ledgerUser.is_active) {
+      return NextResponse.redirect(new URL('/ledger/login?error=no_access', request.url));
+    }
+
+    // OPERATOR role restrictions (Wasi can only access /ledger/payments)
+    if (ledgerUser.role === 'OPERATOR') {
+      const allowedOperatorPrefixes = ['/ledger/payments'];
+      const isAllowed = allowedOperatorPrefixes.some(prefix =>
+        currentPath === prefix || currentPath.startsWith(prefix + '/')
+      );
+      if (!isAllowed) {
+        return NextResponse.redirect(new URL('/ledger/payments', request.url));
+      }
+    }
+
     return response;
   }
 
-  // Redirect to login if not authenticated
+  // ──────────────────────────────────────────────
+  // EXISTING ERP ROUTING (UNTOUCHED)
+  // ──────────────────────────────────────────────
+  const { response, user, supabase } = await updateSession(request);
+
+  if (ERP_PUBLIC_ROUTES.includes(currentPath)) {
+    return response;
+  }
+
   if (!user) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // Role-based route protection
   const { data: profile } = await supabase
     .from('profiles')
     .select('role')
@@ -29,7 +72,6 @@ export async function middleware(request: NextRequest) {
   if (!profile) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
-
 
   const isAuthorized = canAccessPath(profile.role, currentPath);
 
